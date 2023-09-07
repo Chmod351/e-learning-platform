@@ -14,7 +14,7 @@ const app = express();
 // app.use(cors())
 
 // routes
-// app.use('/api/v1',products)
+// app.use('/api/v1/products',products)
 
 app.listen(PORT, () => {
     server()
