@@ -1,16 +1,16 @@
-const db = require('mongoose')
-const enviroments = require('./envConfig')
+import mongoose from "mongoose"
+import enviroments from './envConfig'
 
-const url: string = enviroments.MONGO_DB
+const url:any = enviroments.MONGO_DB
 
 const connect = () => {
-    db.connect(url).then(() => {
+    mongoose.connect(url).then(() => {
         console.log('connected to db')
     }).catch((err: any) => {
         throw err
     })
 }
 
-module.exports = connect
+export default connect
 
 

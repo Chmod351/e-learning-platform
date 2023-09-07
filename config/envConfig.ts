@@ -1,9 +1,8 @@
-const envConfig=require('dotenv')
-envConfig.config()
+import { config } from "dotenv"
+config()
 
-const env={
+ const env={
     MONGO_DB:process.env.MONGO,
-    JWT:process.env.TOKEN,
 }
 
-module.exports=env
+export default env
