@@ -2,7 +2,6 @@ import { Service, Inject } from "typedi";
 import { Model } from 'mongoose';
 import Product,{IProduct} from "../application/Products/productsModel";
 
-
 @Service()
 class ProductRepository {
   constructor(
