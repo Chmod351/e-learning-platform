@@ -3,7 +3,6 @@ const enviroments = require('./envConfig')
 
 const url: string = enviroments.MONGO_DB
 
-
 const connect = () => {
     db.connect(url).then(() => {
         console.log('connected to db')
@@ -12,6 +11,6 @@ const connect = () => {
     })
 }
 
-module.exports=connect
+module.exports = connect
 
 
