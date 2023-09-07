@@ -1,6 +1,6 @@
 import { Service, Inject } from "typedi";
 import { Model } from 'mongoose';
-import Product,{IProduct} from "../application/Products/productsModel";
+import Product, { IProduct } from "../application/Products/productsModel";
 
 @Service()
 class ProductRepository {
@@ -11,7 +11,9 @@ class ProductRepository {
   async findAll(): Promise<IProduct[]> {
     return await this.Product.find().exec();
   }
-
+  async findByQuery(query: object): Promise<IProduct[] | null> {
+    return await this.Product.find(query)
+  }
   async findById(id: string): Promise<IProduct | null> {
     return await this.Product.findById(id).exec();
   }
@@ -29,4 +31,6 @@ class ProductRepository {
   }
 }
 
-export default new ProductRepository(Product);
+const productRepository = new ProductRepository(Product);
+
+export default productRepository
