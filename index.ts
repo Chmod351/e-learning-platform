@@ -1,19 +1,25 @@
-import 'reflect-metadata'
-import express from 'express'
-import cors from 'cors'
-import server from './config/dbConfig'
-import products from './application/Products/productsRoutes'
+import 'reflect-metadata';
+import express from 'express';
+import cors from 'cors';
+import server from './config/dbConfig';
+import products from './application/Products/productsRoutes';
 
 // config
-const PORT: number = 5000;
+const corsConfig = cors({
+  origin: '*',
+  allowedHeaders: 'Content-Type',
+});
+const PORT: number = 4000;
 const app = express();
 
 //middlewares
-app.use(cors())
+app.use(corsConfig);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// routes
-app.use('/api/v1/products',products)
+// endpoints
+app.use('/api/v1/products', products);
 
 app.listen(PORT, () => {
-    server()
+  server();
 });
