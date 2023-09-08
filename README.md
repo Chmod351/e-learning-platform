@@ -8,7 +8,7 @@
 
 
 ## About this project
-this project is an ecommerce rest api, it's uses [express]() [typescript](), [mongoose](), [typedi]().
+this project is an ecommerce rest api, it's uses [express]() [typescript](), [mongoose](), [typedi](). [morgan]()
 The project use a [modular architecture](https://scorpionconmate.notion.site/scorpionconmate/The-Folder-Hell-in-Typescript-ed146a5d32e4476794b79b6190e4afc0) to keep it scalable and easy to maintain.
 
 ## Configuration
@@ -25,9 +25,36 @@ To use this project in your local follow the next steps:
  - Now open a terminal and run ```npm run dev```
  
 
- ## Endpoints:
+ ## Endpoints and Responses:
  
- `Get All` `/api/v1/products` 
+ `Get All` `/api/v1/products` This endpoint will return all the products stored in the database contained in an array.
+Example: 
+```
+[
+    {
+        "_id": "64fb230758ac6e592c8177be",
+        "name": "product1",
+        "description": "description1",
+        "image_url": "www.image.com",
+        "price": 23,
+        "createdAt": "2023-09-08T13:35:03.946Z",
+        "updatedAt": "2023-09-08T13:35:03.946Z",
+        "__v": 0
+    }
+   {
+        "_id": "64fb230758ac6e592c817722",
+        "name": "product2",
+        "description": "description2",
+        "image_url": "www.image.com",
+        "price": 220,
+        "createdAt": "2023-09-08T13:35:03.946Z",
+        "updatedAt": "2023-09-08T13:35:03.946Z",
+        "__v": 0
+    }
+
+]
+
+```
  `Get by Id` `/api/v1/products/:id` 
  `POST` `/api/v1/products/create` 
  `PUT` `/api/v1/products/update/:id` 

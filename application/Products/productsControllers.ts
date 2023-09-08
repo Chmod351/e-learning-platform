@@ -14,8 +14,6 @@ class ProductController {
 
   async findById(req: any, res: any) {
     const id: string = req.params.id;
-    console.log(id);
-
     const product = await productService.findById(id);
     res.status(200).json(product);
   }
