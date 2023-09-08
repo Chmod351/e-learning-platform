@@ -2,43 +2,28 @@ import productRepository from '../../repositories/productsRepository';
 
 class ProductServices {
   async findAll() {
-    try {
-      return await productRepository.findAll();
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    return await productRepository.findAll();
   }
   async findByQuery(query: string) {
-    const q = { name: { $all: query } } || { description: { $all: query } };
-    try {
-      return await productRepository.findByQuery(q);
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    const q = {
+      $or: [
+        { name: { $regex: query, $options: 'i' } },
+        { description: { $regex: query, $options: 'i' } },
+      ],
+    };
+    return await productRepository.findByQuery(q);
   }
   async findById(id: string) {
-    try {
-      return await productRepository.findById(id);
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    return await productRepository.findById(id);
   }
   async createProduct(body: object) {
-      return await productRepository.create(body);
+    return await productRepository.create(body);
   }
   async updateProduct(id: string, product: object) {
-    try {
-      return await productRepository.update(id, product);
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    return await productRepository.update(id, product);
   }
   async deleteProduct(id: string) {
-    try {
-      return await productRepository.delete(id);
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    return await productRepository.delete(id);
   }
 }
 

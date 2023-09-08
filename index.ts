@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express from 'express';
+import express, { Application, Response, NextFunction, Request } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import server from './config/dbConfig';
@@ -11,16 +11,19 @@ const corsConfig = cors({
   allowedHeaders: 'Content-Type',
 });
 const PORT: number = 4000;
-const app = express();
+const app: Application = express();
 
 //error handler
-function errorHandler(error: any, req: any, res: any, next: any) {
-  const errMsg: object = { error: error._message };
-  if (error.statusCode) {
-    res.status(error.statusCode).json(errMsg);
-  } else {
-    res.status(500).json(errMsg);
-  }
+function errorHandler(
+  error: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const errMsg: object = { error: error.message };
+
+  res.status(500).json(errMsg);
+
   next();
 }
 

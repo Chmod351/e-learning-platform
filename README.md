@@ -6,7 +6,7 @@
 
 ## About this project
 
-this project is an ecommerce rest api, it's uses [express]() [typescript](), [mongoose](), [typedi](). [morgan]()
+this project is an ecommerce rest api, it's uses express typescript,mongoose, typedi. morgan
 The project use a [modular architecture](https://scorpionconmate.notion.site/scorpionconmate/The-Folder-Hell-in-Typescript-ed146a5d32e4476794b79b6190e4afc0) to keep it scalable and easy to maintain.
 
 ## Configuration
@@ -24,56 +24,12 @@ To use this project in your local follow the next steps:
   (Remember to change`username` and `password` with yours credentials).
 - Now open a terminal and run `npm run dev`
 
-## Endpoints and Responses:
+## Endpoints:
 
 `Get All` `/api/v1/products` This endpoint will return all the products stored in the database contained in an array.
 Example:
-
-```
-[
-    {
-        "_id": "64fb230758ac6e592c8177be",
-        "name": "product1",
-        "description": "description1",
-        "image_url": "www.image.com",
-        "price": 23,
-        "createdAt": "2023-09-08T13:35:03.946Z",
-        "updatedAt": "2023-09-08T13:35:03.946Z",
-        "__v": 0
-    }
-   {
-        "_id": "64fb230758ac6e592c817722",
-        "name": "product2",
-        "description": "description2",
-        "image_url": "www.image.com",
-        "price": 220,
-        "createdAt": "2023-09-08T13:35:03.946Z",
-        "updatedAt": "2023-09-08T13:35:03.946Z",
-        "__v": 0
-    }
-
-]
-
-```
-
 `Get by Id` `/api/v1/products/:id` (This endpoint will search for the product by its product ID, and if there is no product with such an ID, it will return null. To search by ID, you should pass the ID as a parameter.)
-Example:
-route: `http://localhost:4000/api/v1/products/64fb13fa4bee51fd44a958a7`
-
-``
-{
-"_id": "64fb13fa4bee51fd44a958a7`",
-"name": "product1",
-"description": "description1",
-"image_url": "www.image.com",
-"price": 23,
-"createdAt": "2023-09-08T13:35:03.946Z",
-"updatedAt": "2023-09-08T13:35:03.946Z",
-"\_\_v": 0
-}
-
-``
-
-`POST` `/api/v1/products/create`
-`PUT` `/api/v1/products/update/:id`
-`DELETE` `/api/v1/products/delete/:id`
+`Get By Query` `http://localhost:4000/api/v1/products/search` You can search a product by name or description sending those parameters as a query
+`POST` `/api/v1/products/create` To `create` a product, you need the name, description, image URL, and price
+`PUT` `/api/v1/products/update/:id` To `edit` a product you need the id, and you can change the name, description, image URL, and price
+`DELETE` `/api/v1/products/delete/:id` To `delete` a product you need the id,

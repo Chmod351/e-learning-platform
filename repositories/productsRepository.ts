@@ -4,16 +4,16 @@ import Product, { IProduct } from '../application/Products/productsModel';
 
 @Service()
 class ProductRepository {
-  constructor(@Inject() private Product: Model<IProduct>) {}
+  constructor(@Inject('ProductModel') private Product: Model<IProduct>) {}
 
   async findAll(): Promise<IProduct[]> {
     return await this.Product.find().exec();
   }
-  async findByQuery(query: object): Promise<IProduct[] | null> {
-    return await this.Product.find(query);
+  async findByQuery(query: object): Promise<IProduct[]> {
+    return await this.Product.find(query).exec();
   }
   async findById(id: string): Promise<IProduct | null> {
-    return await this.Product.findById(id);
+    return await this.Product.findById(id).exec();
   }
 
   async create(product: object): Promise<IProduct> {
@@ -34,4 +34,3 @@ class ProductRepository {
 const productRepository = new ProductRepository(Product);
 
 export default productRepository;
-

@@ -3,7 +3,7 @@ import productsController from "./productsControllers"
 const routes = Router();
 
 routes.get("/", productsController.findAll);
-routes.get("/search?q=", productsController.findByQuery);
+routes.get("/search", productsController.findByQuery);
 routes.get("/:id", productsController.findById);
 routes.post("/create", productsController.create);
 routes.put("/update/:id", productsController.update);
