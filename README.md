@@ -27,11 +27,11 @@ To use this project in your local follow the next steps:
 
  ## Endpoints:
  
- `Get All` `/api/v1/products` ()
- `Get by Id` `/api/v1/products/:id` ()
- `POST` `/api/v1/products/create` ()
- `PUT` `/api/v1/products/update/:id` ()
- `DELETE` `/api/v1/products/delete/:id` ()
+ `Get All` `/api/v1/products` 
+ `Get by Id` `/api/v1/products/:id` 
+ `POST` `/api/v1/products/create` 
+ `PUT` `/api/v1/products/update/:id` 
+ `DELETE` `/api/v1/products/delete/:id` 
 
 
 

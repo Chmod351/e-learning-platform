@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import server from './config/dbConfig';
 import products from './application/Products/productsRoutes';
 
@@ -16,6 +17,7 @@ const app = express();
 app.use(corsConfig);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 // endpoints
 app.use('/api/v1/products', products);

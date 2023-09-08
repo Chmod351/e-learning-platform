@@ -2,7 +2,6 @@ import productService from './productsServices';
 
 class ProductController {
   async findAll(req: any, res: any) {
-    console.log('findAll');
     const products = await productService.findAll();
     res.status(200).json(products);
   }
@@ -14,13 +13,14 @@ class ProductController {
   }
 
   async findById(req: any, res: any) {
-    const id: string = req.params._id;
+    const id: string = req.params.id;
+    console.log(id);
+
     const product = await productService.findById(id);
     res.status(200).json(product);
   }
 
   async create(req: any, res: any) {
-    console.log(req.body);
     const { name, description, image_url, price } = req.body;
     const createdProduct = await productService.createProduct({
       name,
@@ -32,7 +32,7 @@ class ProductController {
   }
 
   async update(req: any, res: any) {
-    const id: string = req.params._id;
+    const id: string = req.params.id;
     const { name, description, image_url, price } = req.body;
     const updatedProduct = await productService.updateProduct(id, {
       name,
@@ -44,7 +44,7 @@ class ProductController {
   }
 
   async delete(req: any, res: any) {
-    const id: string = req.params._id;
+    const id: string = req.params.id;
     const deletedProduct = await productService.deleteProduct(id);
     res.status(200).json(deletedProduct);
   }
@@ -53,4 +53,3 @@ class ProductController {
 const productController = new ProductController();
 
 export default productController;
-

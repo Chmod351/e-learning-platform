@@ -1,21 +1,19 @@
-import { Service, Inject } from "typedi";
+import { Service, Inject } from 'typedi';
 import { Model } from 'mongoose';
-import Product, { IProduct } from "../application/Products/productsModel";
+import Product, { IProduct } from '../application/Products/productsModel';
 
 @Service()
 class ProductRepository {
-  constructor(
-    @Inject() private Product: Model<IProduct>,
-  ) { }
+  constructor(@Inject() private Product: Model<IProduct>) {}
 
   async findAll(): Promise<IProduct[]> {
     return await this.Product.find().exec();
   }
   async findByQuery(query: object): Promise<IProduct[] | null> {
-    return await this.Product.find(query)
+    return await this.Product.find(query);
   }
   async findById(id: string): Promise<IProduct | null> {
-    return await this.Product.findById(id).exec();
+    return await this.Product.findById(id);
   }
 
   async create(product: object): Promise<IProduct> {
@@ -23,7 +21,9 @@ class ProductRepository {
   }
 
   async update(id: string, product: object): Promise<IProduct | null> {
-    return await this.Product.findOneAndUpdate({ _id: id }, product, { new: true }).exec();
+    return await this.Product.findOneAndUpdate({ _id: id }, product, {
+      new: true,
+    }).exec();
   }
 
   async delete(id: string): Promise<any> {
@@ -33,4 +33,5 @@ class ProductRepository {
 
 const productRepository = new ProductRepository(Product);
 
-export default productRepository
+export default productRepository;
+

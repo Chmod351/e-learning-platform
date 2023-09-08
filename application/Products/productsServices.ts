@@ -50,4 +50,3 @@ class ProductServices {
 const productService = new ProductServices();
 
 export default productService;
-
