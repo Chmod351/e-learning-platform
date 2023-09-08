@@ -1,4 +1,5 @@
 import productService from './productsServices';
+import { IProduct } from './productsModel';
 
 class ProductController {
   async findAll(req: any, res: any) {
@@ -18,15 +19,19 @@ class ProductController {
     res.status(200).json(product);
   }
 
-  async create(req: any, res: any) {
+  async create(req: any, res: any, next: any) {
     const { name, description, image_url, price } = req.body;
-    const createdProduct = await productService.createProduct({
-      name,
-      description,
-      image_url,
-      price,
-    });
-    res.status(200).json(createdProduct);
+    try {
+      const createdProduct = await productService.createProduct({
+        name,
+        description,
+        image_url,
+        price,
+      });
+      res.json(createdProduct);
+    } catch (error: any) {
+      next(error);
+    }
   }
 
   async update(req: any, res: any) {

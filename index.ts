@@ -13,6 +13,17 @@ const corsConfig = cors({
 const PORT: number = 4000;
 const app = express();
 
+//error handler
+function errorHandler(error: any, req: any, res: any, next: any) {
+  const errMsg: object = { error: error._message };
+  if (error.statusCode) {
+    res.status(error.statusCode).json(errMsg);
+  } else {
+    res.status(500).json(errMsg);
+  }
+  next();
+}
+
 //middlewares
 app.use(corsConfig);
 app.use(express.json());
@@ -21,6 +32,8 @@ app.use(morgan('dev'));
 
 // endpoints
 app.use('/api/v1/products', products);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   server();

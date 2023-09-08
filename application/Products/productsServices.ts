@@ -24,12 +24,7 @@ class ProductServices {
     }
   }
   async createProduct(body: object) {
-    console.log(body);
-    try {
       return await productRepository.create(body);
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
   }
   async updateProduct(id: string, product: object) {
     try {
