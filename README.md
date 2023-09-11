@@ -3,7 +3,7 @@
 - [About this project](#About-this-project)
 - [Configuration](#Configuration)
 - [Endpoints](#Endpoints)
-- [POSTMAN DOCUMENTATION)(https://documenter.getpostman.com/view/21643141/2s9YC1Vu9P)
+- [POSTMAN DOCUMENTATION](https://documenter.getpostman.com/view/21643141/2s9YC1Vu9P)
 
 ## About this project
 
