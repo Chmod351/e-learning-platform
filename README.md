@@ -6,8 +6,6 @@
 - [POSTMAN DOCUMENTATION](https://documenter.getpostman.com/view/21643141/2s9YC1Vu9P)
 
 ## About this project
-
-This `CRUD API Rest` you can create edit delete search products.
 this project is an ecommerce rest api, it's uses `express` `typescript`, `mongoose`, `typedi`, `morgan`.
 The project use a [modular architecture](https://scorpionconmate.notion.site/scorpionconmate/The-Folder-Hell-in-Typescript-ed146a5d32e4476794b79b6190e4afc0) to keep it scalable and easy to maintain.
 
@@ -24,7 +22,7 @@ To use this project in your local follow the next steps:
 - Now, you need to create a `.env` file in the root of your local project, and now paste this:
   `MONGO=mongodb+srv://username:password@cluster0.hfisa.mongodb.net/?retryWrites=true&w=majority`
   (Remember to change`username` and `password` with yours credentials).
-- Now open a terminal and run `npm run dev` to build your Ts application run `npm rn build` .
+- Now open a terminal and run `npm run dev` to build your Ts application run `npm run build` .
 
 ## Endpoints:
 
