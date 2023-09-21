@@ -6,6 +6,8 @@ export interface IProduct extends Document {
   image_url: string;
   price: number;
   stars: number;
+  stock: number;
+  views: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -23,6 +25,14 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     stars: {
       type: Number,
       required: false,
+    },
+    stock: {
+      type: Number,
+      required: [true, 'Stock is required'],
+    },
+    views: {
+      type: Number,
+      default: 0,
     },
     image_url: {
       type: String,
