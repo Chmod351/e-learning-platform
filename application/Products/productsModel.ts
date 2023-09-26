@@ -57,7 +57,6 @@ const ProductSchema = new mongoose.Schema<IProduct>(
       type: Number,
       required: [true, 'Stock is required'],
       min: 0,
-      max: 100000,
     },
     views: {
       type: Number,
