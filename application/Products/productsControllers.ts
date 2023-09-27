@@ -52,8 +52,16 @@ class ProductController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     const id: string = req.params.id;
-    const { name, description, image_url, price, stars, category, active } =
-      req.body;
+    const {
+      name,
+      description,
+      image_url,
+      price,
+      stars,
+      category,
+      active,
+      stock,
+    } = req.body;
     try {
       const updatedProduct = await productService.updateProduct(id, {
         name,
@@ -63,6 +71,7 @@ class ProductController {
         stars,
         category,
         active,
+        stock,
       });
       res.status(200).json(updatedProduct);
     } catch (error) {
