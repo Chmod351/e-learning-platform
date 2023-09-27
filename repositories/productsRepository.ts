@@ -6,11 +6,17 @@ import Product, { IProduct } from '../application/Products/productsModel';
 class ProductRepository {
   constructor(@Inject('ProductModel') private Product: Model<IProduct>) {}
 
-  async findAll(): Promise<IProduct[]> {
-    return await this.Product.find().exec();
+  async findAll(page: number): Promise<IProduct[]> {
+    const itemsPerPage: number = 50;
+    const skip: number = (page - 1) * itemsPerPage;
+
+    return await this.Product.find().skip(skip).limit(itemsPerPage).exec();
   }
-  async findByQuery(query: object): Promise<IProduct[]> {
-    return await this.Product.find(query).exec();
+  async findByQuery(query: object, page: number): Promise<IProduct[]> {
+    const itemsPerPage: number = 50;
+    const skip: number = (page - 1) * itemsPerPage;
+
+    return await this.Product.find(query).skip(skip).limit(itemsPerPage).exec();
   }
   async findById(id: string): Promise<IProduct | null> {
     return await this.Product.findById(id).exec();

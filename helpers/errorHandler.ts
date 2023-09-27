@@ -6,9 +6,7 @@ export default function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  const errMsg: object = { error: error.message };
-
-  res.status(500).json(errMsg);
+  console.error(error);
 
   next();
 }

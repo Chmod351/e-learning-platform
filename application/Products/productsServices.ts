@@ -1,17 +1,17 @@
 import productRepository from '../../repositories/productsRepository';
 
 class ProductServices {
-  async findAll() {
-    return await productRepository.findAll();
+  async findAll(page: number) {
+    return await productRepository.findAll(page);
   }
-  async findByQuery(query: string) {
-    const q = {
+  async findByQuery(query: string, page: number) {
+    const q: object = {
       $or: [
         { name: { $regex: query, $options: 'i' } },
         { description: { $regex: query, $options: 'i' } },
       ],
     };
-    return await productRepository.findByQuery(q);
+    return await productRepository.findByQuery(q, page);
   }
   async findById(id: string) {
     return await productRepository.findById(id);

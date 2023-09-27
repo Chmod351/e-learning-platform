@@ -4,8 +4,9 @@ import { IProduct } from './productsModel';
 
 class ProductController {
   async findAll(req: Request, res: Response, next: NextFunction) {
+    const page: number | undefined = parseInt(req.query.page as string) || 1;
     try {
-      const products: IProduct[] = await productService.findAll();
+      const products: IProduct[] = await productService.findAll(page);
       res.status(200).json(products);
     } catch (error) {
       next(error);
@@ -18,7 +19,11 @@ class ProductController {
       if (!query) {
         return res.status(400).json({ error: 'Missing query parameter' });
       }
-      const products: IProduct[] = await productService.findByQuery(query);
+      const page: number | undefined = parseInt(req.query.page as string) || 1;
+      const products: IProduct[] = await productService.findByQuery(
+        query,
+        page,
+      );
       res.status(200).json(products);
     } catch (error) {
       next(error);
