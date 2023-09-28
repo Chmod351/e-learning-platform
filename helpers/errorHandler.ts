@@ -1,4 +1,5 @@
 import { Response, NextFunction, Request } from 'express';
+import mongoose from 'mongoose';
 //error handler
 export default function errorHandler(
   error: Error,
@@ -6,7 +7,11 @@ export default function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  console.error(error);
+  if (error instanceof mongoose.Error.ValidationError) {
+    res.status(400).json({ error: error.message });
+  } else {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 
   next();
 }

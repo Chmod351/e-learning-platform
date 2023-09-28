@@ -18,4 +18,5 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   server();
+  console.log(`app running on http://localhost:${PORT}`);
 });
