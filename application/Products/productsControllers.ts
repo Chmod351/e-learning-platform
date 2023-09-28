@@ -33,7 +33,7 @@ class ProductController {
   async findById(req: Request, res: Response, next: NextFunction) {
     const id: string = req.params.id;
     try {
-      const product = await productService.findById(id);
+      const product: IProduct | null = await productService.findById(id);
       res.status(200).json(product);
     } catch (error) {
       next(error);
@@ -41,14 +41,17 @@ class ProductController {
   }
 
   async create(req: Request, res: Response, next: NextFunction) {
-    const { name, description, image_url, price } = req.body;
+    const { name, description, stars, image_url, price, stock } = req.body;
     try {
-      const createdProduct = await productService.createProduct({
-        name,
-        description,
-        image_url,
-        price,
-      });
+      const createdProduct: IProduct | null =
+        await productService.createProduct({
+          name,
+          description,
+          stars,
+          stock,
+          image_url,
+          price,
+        });
       res.json(createdProduct);
     } catch (error) {
       next(error);
@@ -57,32 +60,108 @@ class ProductController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     const id: string = req.params.id;
-    const {
-      name,
-      description,
-      image_url,
-      price,
-      stars,
-      category,
-      active,
-      stock,
-    } = req.body;
+    const { name, description, image_url, price, active, stock } = req.body;
     try {
-      const updatedProduct = await productService.updateProduct(id, {
-        name,
-        description,
-        image_url,
-        price,
-        stars,
-        category,
-        active,
-        stock,
-      });
+      const updatedProduct: IProduct | null =
+        await productService.updateProduct(id, {
+          name,
+          description,
+          image_url,
+          price,
+          active,
+          stock,
+        });
       res.status(200).json(updatedProduct);
     } catch (error) {
       next(error);
     }
   }
+
+  async removeCategory(req: Request, res: Response, next: NextFunction) {
+    const productId: string = req.params.productId;
+    const categoryId = req.body.category;
+
+    try {
+      const product = await productService.findById(productId);
+
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+
+      const categoryIndex = product.category.indexOf(categoryId);
+
+      if (categoryIndex === -1) {
+        return res
+          .status(404)
+          .json({ error: `Category not found in ${productId}` });
+      }
+
+      product.category.splice(categoryIndex, 1);
+
+      const updatedProduct: IProduct | null =
+        await productService.updateProduct(productId, product);
+
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async rateProduct(req: Request, res: Response, next: NextFunction) {
+    const productId: string = req.params.productId;
+    const { userId, rating } = req.body;
+
+    try {
+      const product: IProduct | null = await productService.findById(productId);
+
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+
+      product.userRatings.push({ userId, rating });
+
+      const totalRatings = product.userRatings.length;
+      const sumRatings = product.userRatings.reduce(
+        (sum, userRating) => sum + userRating.rating,
+        0,
+      );
+      const newAverageRating = sumRatings / totalRatings;
+
+      product.stars = newAverageRating;
+
+      const updatedProduct = await productService.updateProduct(
+        productId,
+        product,
+      );
+
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateViews(req: Request, res: Response, next: NextFunction) {
+    const productId: string = req.params.productId;
+    const { views } = req.body;
+
+    try {
+      const product: IProduct | null = await productService.findById(productId);
+
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+
+      product.views = views;
+
+      const updatedProduct: IProduct | null =
+        await productService.updateProduct(productId, product);
+
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async delete(req: Request, res: Response, next: NextFunction) {
     const id: string = req.params.id;
     try {

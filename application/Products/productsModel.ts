@@ -1,11 +1,17 @@
 import mongoose, { Document } from 'mongoose';
 
+export interface IUserRating {
+  userId: mongoose.Types.ObjectId;
+  rating: number;
+}
+
 export interface IProduct extends Document {
   name: string;
   description: string;
   image_url: string;
   price: number;
   stars: number;
+  userRatings: IUserRating[];
   category: mongoose.Types.ObjectId[];
   commentary: mongoose.Types.ObjectId[];
   stock: number;
@@ -41,6 +47,20 @@ const ProductSchema = new mongoose.Schema<IProduct>(
       min: [0, 'The minimum allowed is 0'],
       max: [5, 'The max value allowed is 5'],
     },
+    userRatings: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+        rating: {
+          type: Number,
+          required: true,
+          min: [0, 'The minimum allowed is 0'],
+          max: [5, 'The max value allowed is 5'],
+        },
+      },
+    ],
     category: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -56,12 +76,12 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     stock: {
       type: Number,
       required: [true, 'Stock is required'],
-      min: 0,
+      min: [0, 'The stock cannot be less than 0'],
     },
     views: {
       type: Number,
       default: 0,
-      min: 0,
+      min: [0, 'The views cannot be less than 0'],
     },
     image_url: {
       type: String,
@@ -70,7 +90,7 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     price: {
       type: Number,
       required: [true, 'The price is required'],
-      min: 100,
+      min: [100, 'The price cannot be less than 100'],
     },
     active: {
       type: Boolean,
@@ -79,6 +99,10 @@ const ProductSchema = new mongoose.Schema<IProduct>(
   },
   { timestamps: true },
 );
+
+ProductSchema.path('category').validate(function (value) {
+  return value.length > 0;
+}, 'Categories are required');
 const Product = mongoose.model<IProduct>('Product', ProductSchema);
 
 export default Product;

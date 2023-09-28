@@ -8,6 +8,13 @@ routes.get('/search', productsController.findByQuery);
 routes.get('/:id', idChecker, productsController.findById);
 routes.post('/create', productsController.create);
 routes.put('/update/:id', idChecker, productsController.update);
+routes.put(
+  '/update/category/:id',
+  idChecker,
+  productsController.removeCategory,
+);
+routes.put('/update/rate/:id', idChecker, productsController.rateProduct);
+routes.put('/update/view/:id', idChecker, productsController.updateViews);
 routes.delete('/delete/:id', idChecker, productsController.delete);
 
 export default routes;
