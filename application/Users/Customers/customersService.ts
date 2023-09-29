@@ -16,13 +16,13 @@ class CustomerServices {
   async findById(id: string) {
     return await customerRepository.findById(id);
   }
-  async createProduct(body: object) {
+  async createCustomer(body: object) {
     return await customerRepository.create(body);
   }
-  async updateProduct(id: string, product: object) {
-    return await customerRepository.update(id, product);
+  async updateCustomer(id: string, info: object) {
+    return await customerRepository.update(id, info);
   }
-  async deleteProduct(id: string) {
+  async deleteCustomer(id: string) {
     return await customerRepository.delete(id);
   }
 }

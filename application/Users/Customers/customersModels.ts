@@ -13,7 +13,7 @@ export interface ICustomer {
   password: string;
   email: string;
   cartId: ICart;
-  wishList: IProduct[];
+  wishList: Set<IProduct['productId']>;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -25,6 +25,7 @@ const CustomerSchema = new mongoose.Schema<ICustomer>(
       required: [true, 'The username is required'],
       maxLength: [50, 'The max length for the username is 50 characters'],
       minlength: [3, 'The username must have at least 3 characters'],
+      unique: true,
     },
     password: {
       type: String,
@@ -33,6 +34,7 @@ const CustomerSchema = new mongoose.Schema<ICustomer>(
     },
     email: {
       type: String,
+      unique: true,
       required: [true, 'The email is required'],
       maxlength: [320, 'Email address is too long'],
       validate: {
@@ -47,14 +49,13 @@ const CustomerSchema = new mongoose.Schema<ICustomer>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Cart',
     },
-    wishList: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Product',
-        },
+    wishList: {
+      type: Set,
+      of: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
       },
-    ],
+    },
   },
   { timestamps: true },
 );

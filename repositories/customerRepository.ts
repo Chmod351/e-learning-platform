@@ -30,8 +30,8 @@ class CustomerRepository {
     return await this.Customer.create(user);
   }
 
-  async update(id: string, user: object): Promise<ICustomer | null> {
-    return await this.Customer.findOneAndUpdate({ _id: id }, user, {
+  async update(id: string, info: object): Promise<ICustomer | null> {
+    return await this.Customer.findOneAndUpdate({ _id: id }, info, {
       new: true,
     }).exec();
   }
