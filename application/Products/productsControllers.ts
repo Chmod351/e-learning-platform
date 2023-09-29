@@ -1,6 +1,6 @@
 import productService from './productsServices';
 import { Request, Response, NextFunction } from 'express';
-import { IProduct } from './productsModel';
+import { ICategory, IProduct } from './productsModel';
 
 class ProductController {
   async findAll(req: Request, res: Response, next: NextFunction) {
@@ -79,10 +79,10 @@ class ProductController {
 
   async removeCategory(req: Request, res: Response, next: NextFunction) {
     const productId: string = req.params.productId;
-    const categoryId = req.body.category;
+    const categoryId: ICategory = req.body.category;
 
     try {
-      const product = await productService.findById(productId);
+      const product: IProduct | null = await productService.findById(productId);
 
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });
@@ -120,19 +120,17 @@ class ProductController {
 
       product.userRatings.push({ userId, rating });
 
-      const totalRatings = product.userRatings.length;
-      const sumRatings = product.userRatings.reduce(
+      const totalRatings: number = product.userRatings.length;
+      const sumRatings: number = product.userRatings.reduce(
         (sum, userRating) => sum + userRating.rating,
         0,
       );
-      const newAverageRating = sumRatings / totalRatings;
+      const newAverageRating: number = sumRatings / totalRatings;
 
       product.stars = newAverageRating;
 
-      const updatedProduct = await productService.updateProduct(
-        productId,
-        product,
-      );
+      const updatedProduct: IProduct | null =
+        await productService.updateProduct(productId, product);
 
       res.status(200).json(updatedProduct);
     } catch (error) {
@@ -142,7 +140,7 @@ class ProductController {
 
   async updateViews(req: Request, res: Response, next: NextFunction) {
     const productId: string = req.params.productId;
-    const { views } = req.body;
+    const views: number = req.body.views;
 
     try {
       const product: IProduct | null = await productService.findById(productId);

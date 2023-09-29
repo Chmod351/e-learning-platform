@@ -4,7 +4,12 @@ export interface IUserRating {
   userId: mongoose.Types.ObjectId;
   rating: number;
 }
-
+export interface ICategory {
+  categoryId: mongoose.Types.ObjectId;
+}
+export interface ICommentary {
+  commentaryId: mongoose.Types.ObjectId;
+}
 export interface IProduct extends Document {
   name: string;
   description: string;
@@ -12,8 +17,8 @@ export interface IProduct extends Document {
   price: number;
   stars: number;
   userRatings: IUserRating[];
-  category: mongoose.Types.ObjectId[];
-  commentary: mongoose.Types.ObjectId[];
+  category: ICategory[];
+  commentary: ICommentary[];
   stock: number;
   views: number;
   active: Boolean;
