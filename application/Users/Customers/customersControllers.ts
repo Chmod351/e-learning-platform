@@ -51,6 +51,28 @@ class CustomerController {
       next(error);
     }
   }
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username, password, email } = req.body;
+      const user: ICustomer = await customerService.createCustomer({
+        username,
+        password,
+        email,
+      });
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId: string = req.params.id;
+      const deletedCustomer = await customerService.deleteCustomer(userId);
+      res.status(200).json(deletedCustomer);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 const customerController = new CustomerController();
 export default customerController;
