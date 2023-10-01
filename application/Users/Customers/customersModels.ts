@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import validator from 'email-validator';
 
 export interface ICart {
   cartId: mongoose.Types.ObjectId;
@@ -9,6 +10,7 @@ export interface IProduct {
 }
 
 export interface ICustomer {
+  _id: mongoose.Types.ObjectId;
   username: string;
   password: string;
   email: string;
@@ -38,10 +40,7 @@ const CustomerSchema = new mongoose.Schema<ICustomer>(
       required: [true, 'The email is required'],
       maxlength: [320, 'Email address is too long'],
       validate: {
-        validator: function (value: string) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return emailRegex.test(value);
-        },
+        validator: (email: string) => validator.validate(email),
         message: 'Invalid email format',
       },
     },
@@ -50,7 +49,7 @@ const CustomerSchema = new mongoose.Schema<ICustomer>(
       ref: 'Cart',
     },
     wishList: {
-      type: Set,
+      type: Array,
       of: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',

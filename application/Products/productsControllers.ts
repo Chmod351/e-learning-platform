@@ -88,7 +88,7 @@ class ProductController {
         return res.status(404).json({ error: 'Product not found' });
       }
 
-      const categoryIndex = product.category.indexOf(categoryId);
+      const categoryIndex: number = product.category.indexOf(categoryId);
 
       if (categoryIndex === -1) {
         return res

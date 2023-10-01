@@ -16,6 +16,9 @@ class CustomerServices {
   async findById(id: string) {
     return await customerRepository.findById(id);
   }
+  async findByEmail(email: string) {
+    return await customerRepository.findByEmail(email);
+  }
   async createCustomer(body: object) {
     return await customerRepository.create(body);
   }

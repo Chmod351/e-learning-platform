@@ -25,7 +25,9 @@ class CustomerRepository {
   async findById(id: string): Promise<ICustomer | null> {
     return await this.Customer.findById(id).exec();
   }
-
+  async findByEmail(email: string): Promise<ICustomer | null> {
+    return await this.Customer.findOne({ email }).exec();
+  }
   async create(user: object): Promise<ICustomer> {
     return await this.Customer.create(user);
   }
