@@ -1,6 +1,7 @@
 import productService from './productsServices';
 import { Request, Response, NextFunction } from 'express';
 import { ICategory, IProduct } from './productsModel';
+import { BadRequestError, NotFoundError } from '../../helpers/errorHandler';
 
 class ProductController {
   async findAll(req: Request, res: Response, next: NextFunction) {
@@ -17,7 +18,7 @@ class ProductController {
     try {
       const query: string | undefined = req.query.query as string;
       if (!query) {
-        return res.status(400).json({ error: 'Missing query parameter' });
+        throw new BadRequestError('query is missing in the parameters');
       }
       const page: number | undefined = parseInt(req.query.page as string) || 1;
       const products: IProduct[] = await productService.findByQuery(
@@ -85,15 +86,13 @@ class ProductController {
       const product: IProduct | null = await productService.findById(productId);
 
       if (!product) {
-        return res.status(404).json({ error: 'Product not found' });
+        throw new NotFoundError(`Product with id:${productId} Not Found`);
       }
 
       const categoryIndex: number = product.category.indexOf(categoryId);
 
       if (categoryIndex === -1) {
-        return res
-          .status(404)
-          .json({ error: `Category not found in ${productId}` });
+        throw new NotFoundError(`category with id: ${categoryId} Not Found`);
       }
 
       product.category.splice(categoryIndex, 1);
@@ -115,7 +114,7 @@ class ProductController {
       const product: IProduct | null = await productService.findById(productId);
 
       if (!product) {
-        return res.status(404).json({ error: 'Product not found' });
+        throw new NotFoundError(`Product with id:${productId} Not Found`);
       }
 
       product.userRatings.push({ userId, rating });
@@ -146,7 +145,7 @@ class ProductController {
       const product: IProduct | null = await productService.findById(productId);
 
       if (!product) {
-        return res.status(404).json({ error: 'Product not found' });
+        throw new NotFoundError(`Product with id:${productId} Not Found`);
       }
 
       product.views = views;

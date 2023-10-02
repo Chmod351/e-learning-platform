@@ -4,7 +4,7 @@ import server from './src/config/dbConfig';
 import products from './src/application/Products/productsRoutes';
 import customer from './src/application/Users/Customers/customersRoutes';
 import middlewares from './src/middlewares/middlewares';
-import errorHandler from './src/helpers/errorHandler';
+import { errorHandler } from './src/helpers/errorHandler';
 
 // config
 const PORT: number = 4000;
@@ -14,7 +14,7 @@ middlewares(app);
 
 // endpoints
 app.use('/api/v1/products', products);
-app.use('/api/v1/customer', customer);
+app.use('/api/v1/customers', customer);
 
 app.use(errorHandler);
 
