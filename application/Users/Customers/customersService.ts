@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import customerRepository from '../../../repositories/customerRepository';
 
 class CustomerServices {
@@ -13,7 +14,7 @@ class CustomerServices {
     };
     return await customerRepository.findByQuery(q, page);
   }
-  async findById(id: string) {
+  async findById(id: string | mongoose.Types.ObjectId) {
     return await customerRepository.findById(id);
   }
   async findByEmail(email: string) {

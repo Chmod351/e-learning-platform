@@ -11,6 +11,7 @@ export interface ICommentary {
   commentaryId: mongoose.Types.ObjectId;
 }
 export interface IProduct extends Document {
+  _id: mongoose.Types.ObjectId;
   name: string;
   description: string;
   image_url: string;

@@ -1,5 +1,5 @@
 import { Service, Inject } from 'typedi';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import Customer, {
   ICustomer,
 } from '../application/Users/Customers/customersModels';
@@ -22,7 +22,9 @@ class CustomerRepository {
       .limit(itemsPerPage)
       .exec();
   }
-  async findById(id: string): Promise<ICustomer | null> {
+  async findById(
+    id: string | mongoose.Types.ObjectId,
+  ): Promise<ICustomer | null> {
     return await this.Customer.findById(id).exec();
   }
   async findByEmail(email: string): Promise<ICustomer | null> {

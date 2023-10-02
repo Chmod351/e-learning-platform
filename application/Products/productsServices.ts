@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import productRepository from '../../repositories/productsRepository';
 
 class ProductServices {
@@ -13,7 +14,7 @@ class ProductServices {
     };
     return await productRepository.findByQuery(q, page);
   }
-  async findById(id: string) {
+  async findById(id: string | mongoose.Types.ObjectId) {
     return await productRepository.findById(id);
   }
   async createProduct(body: object) {

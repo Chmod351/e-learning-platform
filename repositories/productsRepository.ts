@@ -1,5 +1,5 @@
 import { Service, Inject } from 'typedi';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import Product, { IProduct } from '../application/Products/productsModel';
 
 @Service()
@@ -18,7 +18,9 @@ class ProductRepository {
 
     return await this.Product.find(query).skip(skip).limit(itemsPerPage).exec();
   }
-  async findById(id: string): Promise<IProduct | null> {
+  async findById(
+    id: string | mongoose.Types.ObjectId,
+  ): Promise<IProduct | null> {
     return await this.Product.findById(id).exec();
   }
 

@@ -1,12 +1,9 @@
 import mongoose from 'mongoose';
 import validator from 'email-validator';
+import { IProduct } from '../../Products/productsModel';
 
 export interface ICart {
   cartId: mongoose.Types.ObjectId;
-}
-
-export interface IProduct {
-  productId: mongoose.Types.ObjectId;
 }
 
 export interface ICustomer {
@@ -15,7 +12,7 @@ export interface ICustomer {
   password: string;
   email: string;
   cartId: ICart;
-  wishList: Set<IProduct['productId']>;
+  wishList: Set<IProduct['_id']>;
   createdAt?: Date;
   updatedAt?: Date;
 }

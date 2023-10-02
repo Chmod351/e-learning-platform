@@ -1,10 +1,13 @@
 import customerService from './customersService';
 import { Request, Response, NextFunction } from 'express';
-import { ICustomer, IProduct } from './customersModels';
+import { ICustomer } from './customersModels';
 import Encrypt from '../../../helpers/encription';
 import { Service, Inject } from 'typedi';
 import { SessionData } from 'express-session';
 import UserEvents from '../../../events/userEvents';
+import mongoose from 'mongoose';
+import productService from '../../Products/productsServices';
+import { IProduct } from '../../Products/productsModel';
 
 interface MySessionData extends SessionData {
   loggedin?: boolean;
@@ -66,11 +69,15 @@ class CustomerController {
   }
   async addToWishList(req: Request, res: Response, next: NextFunction) {
     try {
-      const productId: IProduct = req.body.productId;
+      const productId: mongoose.Types.ObjectId = req.body.productId;
       const customerId: string = req.params.id;
       const store: object = { $addToSet: { wishList: productId } };
       const newWishlist: ICustomer | null =
         await customerService.updateCustomer(customerId, store);
+      const product: IProduct | null = await productService.findById(productId);
+      if (product) {
+        this.userEvents.emitUserWishlistUpdate(customerId, product);
+      }
       res.status(200).json(newWishlist);
     } catch (error) {
       next(error);
