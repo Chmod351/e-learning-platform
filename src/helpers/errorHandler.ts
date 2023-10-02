@@ -1,7 +1,7 @@
 import { Response, NextFunction, Request } from 'express';
 import mongoose from 'mongoose';
 
-class BaseError extends Error {
+export class BaseError extends Error {
   statusCode!: number;
 
   constructor(message: string) {
@@ -41,18 +41,14 @@ class BadRequestError extends BaseError {
   }
 }
 
-function errorHandler(
-  error: BaseError,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+async function errorHandler(error: BaseError, req: Request, res: Response) {
   if (error.statusCode) {
     res.status(error.statusCode).json({ error: error.message });
   } else if (error instanceof mongoose.Error.ValidationError) {
     res.status(400).json({ error: error.message });
+  } else {
+    res.status(500).json({ error: error.message });
   }
-  next();
 }
 
 export {

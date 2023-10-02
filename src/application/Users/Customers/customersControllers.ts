@@ -8,6 +8,7 @@ import UserEvents from '../../../events/userEvents';
 import mongoose from 'mongoose';
 import productService from '../../Products/productsServices';
 import { IProduct } from '../../Products/productsModel';
+import { BadRequestError, NotFoundError } from '../../../helpers/errorHandler';
 
 interface MySessionData extends SessionData {
   loggedin?: boolean;
@@ -32,7 +33,7 @@ class CustomerController {
     try {
       const query: string | undefined = req.query.query as string;
       if (!query) {
-        res.status(400).json({ error: 'Missing query parameter' });
+        throw new NotFoundError('query is missing in the parameters');
       }
       const page: number | undefined = parseInt(req.query.page as string) || 1;
       const customer: ICustomer[] = await customerService.findByQuery(
@@ -107,7 +108,9 @@ class CustomerController {
           user.password,
         );
         if (user === null || !match) {
-          res.status(400).json({ message: 'password or email invalid' });
+          throw new BadRequestError(
+            `User with email ${user.email} does not exists or password does not match with these email`,
+          );
         } else {
           req.session.regenerate((err) => {
             if (err) {
