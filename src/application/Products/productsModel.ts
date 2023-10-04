@@ -17,9 +17,9 @@ export interface IProduct extends Document {
   image_url: string;
   price: number;
   stars: number;
-  userRatings: IUserRating[];
-  category: ICategory[];
-  commentary: ICommentary[];
+  userRatings: [IUserRating];
+  category: [ICategory];
+  commentary: [ICommentary];
   stock: number;
   views: number;
   active: Boolean;
