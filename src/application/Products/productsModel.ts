@@ -21,7 +21,6 @@ export interface IProduct extends Document {
   category: [ICategory];
   commentary: [ICommentary];
   stock: number;
-  views: number;
   active: Boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -84,11 +83,7 @@ const ProductSchema = new mongoose.Schema<IProduct>(
       required: [true, 'Stock is required'],
       min: [0, 'The stock cannot be less than 0'],
     },
-    views: {
-      type: Number,
-      default: 0,
-      min: [0, 'The views cannot be less than 0'],
-    },
+
     image_url: {
       type: String,
       required: [true, 'The image_url is required'],

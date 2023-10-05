@@ -14,7 +14,6 @@ routes.put(
   productsController.removeCategory,
 );
 routes.put('/update/rate/:id', idChecker, productsController.rateProduct);
-routes.put('/update/view/:id', idChecker, productsController.updateViews);
 routes.delete('/delete/:id', idChecker, productsController.delete);
 
 export default routes;

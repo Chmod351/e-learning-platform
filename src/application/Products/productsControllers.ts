@@ -137,28 +137,6 @@ class ProductController {
     }
   }
 
-  async updateViews(req: Request, res: Response, next: NextFunction) {
-    const productId: string = req.params.productId;
-    const views: number = req.body.views;
-
-    try {
-      const product: IProduct | null = await productService.findById(productId);
-
-      if (!product) {
-        throw new NotFoundError(`Product with id:${productId} Not Found`);
-      }
-
-      product.views = views;
-
-      const updatedProduct: IProduct | null =
-        await productService.updateProduct(productId, product);
-
-      res.status(200).json(updatedProduct);
-    } catch (error) {
-      next(error);
-    }
-  }
-
   async delete(req: Request, res: Response, next: NextFunction) {
     const id: string = req.params.id;
     try {
