@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { ClientSession } from 'mongoose';
 import productRepository from '../../repositories/productsRepository';
 
 class ProductServices {
@@ -21,10 +21,28 @@ class ProductServices {
     return await productRepository.create(body);
   }
   async updateProduct(id: string, product: object) {
-    return await productRepository.update(id, product);
+    const session = await mongoose.startSession();
+    try {
+      session.startTransaction();
+      return await productRepository.update(id, product, session);
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   }
   async deleteProduct(id: string) {
-    return await productRepository.delete(id);
+    const session = await mongoose.startSession();
+    try {
+      session.startTransaction();
+      return await productRepository.delete(id);
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   }
 }
 

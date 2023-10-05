@@ -1,5 +1,5 @@
 import { Service, Inject } from 'typedi';
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, ClientSession } from 'mongoose';
 import Product, { IProduct } from '../application/Products/productsModel';
 
 @Service()
@@ -28,13 +28,19 @@ class ProductRepository {
     return await this.Product.create(product);
   }
 
-  async update(id: string, product: object): Promise<IProduct | null> {
+  async update(
+    id: mongoose.Types.ObjectId | string,
+    product: object,
+    session: ClientSession,
+  ): Promise<IProduct | null> {
     return await this.Product.findOneAndUpdate({ _id: id }, product, {
       new: true,
-    }).exec();
+    })
+      .session(session)
+      .exec();
   }
 
-  async delete(id: string): Promise<any> {
+  async delete(id: mongoose.Types.ObjectId | string): Promise<any> {
     return await this.Product.deleteOne({ _id: id }).exec();
   }
 }

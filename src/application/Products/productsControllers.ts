@@ -53,7 +53,7 @@ class ProductController {
           image_url,
           price,
         });
-      res.json(createdProduct);
+      res.status(201).json(createdProduct);
     } catch (error) {
       next(error);
     }
@@ -72,7 +72,7 @@ class ProductController {
           active,
           stock,
         });
-      res.status(200).json(updatedProduct);
+      res.status(204).json(updatedProduct);
     } catch (error) {
       next(error);
     }
@@ -116,20 +116,11 @@ class ProductController {
       if (!product) {
         throw new NotFoundError(`Product with id:${productId} Not Found`);
       }
-
-      product.userRatings.push({ userId, rating });
-
-      const totalRatings: number = product.userRatings.length;
-      const sumRatings: number = product.userRatings.reduce(
-        (sum, userRating) => sum + userRating.rating,
-        0,
-      );
-      const newAverageRating: number = sumRatings / totalRatings;
-
-      product.stars = newAverageRating;
-
       const updatedProduct: IProduct | null =
-        await productService.updateProduct(productId, product);
+        await productService.updateProduct(productId, {
+          $push: { userRatings: { userId, rating } },
+          $inc: { stars: rating },
+        });
 
       res.status(200).json(updatedProduct);
     } catch (error) {
