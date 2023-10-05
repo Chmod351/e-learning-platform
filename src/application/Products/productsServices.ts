@@ -36,7 +36,8 @@ class ProductServices {
     const session = await mongoose.startSession();
     try {
       session.startTransaction();
-      return await productRepository.delete(id);
+      return await productRepository.delete(id, session);
+      //more operrations with the same session to delete such as , comments, and responses
     } catch (error) {
       await session.abortTransaction();
       throw error;

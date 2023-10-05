@@ -40,8 +40,11 @@ class ProductRepository {
       .exec();
   }
 
-  async delete(id: mongoose.Types.ObjectId | string): Promise<any> {
-    return await this.Product.deleteOne({ _id: id }).exec();
+  async delete(
+    id: mongoose.Types.ObjectId | string,
+    session: ClientSession,
+  ): Promise<object> {
+    return await this.Product.deleteOne({ _id: id }).session(session).exec();
   }
 }
 
