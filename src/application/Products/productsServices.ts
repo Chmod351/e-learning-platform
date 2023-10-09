@@ -1,4 +1,4 @@
-import mongoose, { ClientSession } from 'mongoose';
+import mongoose from 'mongoose';
 import productRepository from '../../repositories/productsRepository';
 
 class ProductServices {
@@ -20,7 +20,7 @@ class ProductServices {
   async createProduct(body: object) {
     return await productRepository.create(body);
   }
-  async updateProduct(id: string, product: object) {
+  async updateProduct(id: string | mongoose.Types.ObjectId, product: object) {
     const session = await mongoose.startSession();
     try {
       session.startTransaction();
@@ -32,7 +32,7 @@ class ProductServices {
       session.endSession();
     }
   }
-  async deleteProduct(id: string) {
+  async deleteProduct(id: string | mongoose.Types.ObjectId) {
     const session = await mongoose.startSession();
     try {
       session.startTransaction();
