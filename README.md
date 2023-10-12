@@ -4,7 +4,6 @@
 - [Configuration](#Configuration)
 - [Endpoints](#Endpoints)
 - [POSTMAN DOCUMENTATION](https://documenter.getpostman.com/view/21643141/2s9YC1Vu9P)
-- [UML & Flowcharts](#Uml-&-Flowcharts)
 
 ## About this project
 
@@ -25,16 +24,5 @@ To use this project in your local follow the next steps:
 - Now open a terminal and run `npm run dev` to build your Ts application run `npm run build` .
 
 ## Endpoints:
-
-
-
-you can read the documentation [here](https://documenter.getpostman.com/view/21643141/2s9YC1Vu9P)
-
-## Uml & Flowcharts
-![image](https://github.com/yamilt351/challenge/assets/88646148/73c6f19f-9d2a-45b4-adb5-be177b3b1c8d)
-![WhatsApp Image 2023-10-12 at 08 32 47](https://github.com/yamilt351/e-learning-platform/assets/88646148/4b6d5b13-476d-46f7-bd15-6cc9cefcc85d)
-
-
-
 
 
