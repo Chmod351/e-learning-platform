@@ -52,5 +52,4 @@ class UserEvents extends EventEmitter implements IUserEvents {
     this.on('wishlist_updated', listener);
   }
 }
-
 export default UserEvents;
